@@ -6,7 +6,6 @@ import os
 class JsonHandler:
     def __init__(self, path):
         self.path = path
-        print("Tworzę plik: 'logs.json'")
 
     def write(self, list):
         json_list = json.dumps(list)
@@ -38,7 +37,6 @@ class JsonHandler:
 class CSVHandler:
     def __init__(self, path):
         self.path = path
-        print("Tworzę plik: 'logs.csv'")
 
     def write(self, list):
 
@@ -52,8 +50,6 @@ class CSVHandler:
 class SQLLiteHandler:
     def __init__(self, path):
         self.path = path
-        print("Tworzę plik: 'logs.sqlite'")
-
 
     def write(self, list):
         if not os.path.exists(self.path):
@@ -80,7 +76,6 @@ class SQLLiteHandler:
 class FileHandler:
     def __init__(self, path):
         self.path = path
-        print("Tworzę plik: 'logs.txt'")
 
     def write(self, list):
         with open(self.path, 'a') as file:
