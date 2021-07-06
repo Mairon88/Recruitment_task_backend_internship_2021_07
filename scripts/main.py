@@ -11,7 +11,7 @@ handlers = [json_handler, csv_handler, sql_handler, file_handler]
 
 
 logger = ProfilLogger(handlers)
-logger.set_log_level('DEBUG')
+logger.set_log_level('INFO')
 logger.info("Some info message")
 logger.warning("Some warning message")
 logger.debug("Some debug message")

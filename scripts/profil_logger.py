@@ -20,10 +20,8 @@ class ProfilLogger:
         self.info_msg = str(msg)
         if ProfilLogger.check_levels('INFO'):
             log = LogEntry(ProfilLogger.now, 'INFO', self.info_msg)
-            # for handler in self.handlers:
-            #     handler.write(log.logs)
-            self.handlers[0].write(log.logs)
-            self.handlers[1].write(log.logs)
+            for handler in self.handlers:
+                handler.write(log.logs)
             LogEntry.reset_logs()
 
 
@@ -31,16 +29,16 @@ class ProfilLogger:
         self.warning_msg = str(msg)
         if ProfilLogger.check_levels('WARNING'):
             log = LogEntry(ProfilLogger.now, 'WARNING', self.warning_msg)
-            self.handlers[0].write(log.logs)
-            self.handlers[1].write(log.logs)
+            for handler in self.handlers:
+                handler.write(log.logs)
             LogEntry.reset_logs()
 
     def debug(self, msg):
         self.debug_msg = str(msg)
         if ProfilLogger.check_levels('DEBUG'):
             log = LogEntry(ProfilLogger.now, 'DEBUG', self.debug_msg)
-            self.handlers[0].write(log.logs)
-            self.handlers[1].write(log.logs)
+            for handler in self.handlers:
+                handler.write(log.logs)
             LogEntry.reset_logs()
 
 
@@ -48,8 +46,8 @@ class ProfilLogger:
         self.critical_msg = str(msg)
         if ProfilLogger.check_levels('CRITICAL'):
             log = LogEntry(ProfilLogger.now, 'CRITICAL', self.critical_msg)
-            self.handlers[0].write(log.logs)
-            self.handlers[1].write(log.logs)
+            for handler in self.handlers:
+                handler.write(log.logs)
             LogEntry.reset_logs()
 
 
@@ -58,8 +56,8 @@ class ProfilLogger:
         self.error_msg = str(msg)
         if ProfilLogger.check_levels('ERROR'):
             log = LogEntry(ProfilLogger.now, 'ERROR', self.error_msg)
-            self.handlers[0].write(log.logs)
-            self.handlers[1].write(log.logs)
+            for handler in self.handlers:
+                handler.write(log.logs)
             LogEntry.reset_logs()
 
 
