@@ -18,28 +18,51 @@ class ProfilLogger:
 
     def info(self, msg):
         self.info_msg = str(msg)
-        LogEntry(ProfilLogger.now, 'INFO', self.info_msg)
-        return self.info_msg
+        if ProfilLogger.check_levels('INFO'):
+            log = LogEntry(ProfilLogger.now, 'INFO', self.info_msg)
+            # for handler in self.handlers:
+            #     handler.write(log.logs)
+            self.handlers[0].write(log.logs)
+            self.handlers[1].write(log.logs)
+            LogEntry.reset_logs()
+
 
     def warning(self, msg):
         self.warning_msg = str(msg)
-        LogEntry(ProfilLogger.now, 'WARNING', self.warning_msg)
-        return self.warning_msg
+        if ProfilLogger.check_levels('WARNING'):
+            log = LogEntry(ProfilLogger.now, 'WARNING', self.warning_msg)
+            self.handlers[0].write(log.logs)
+            self.handlers[1].write(log.logs)
+            LogEntry.reset_logs()
 
     def debug(self, msg):
         self.debug_msg = str(msg)
-        LogEntry(ProfilLogger.now, 'DEBUG', self.debug_msg)
-        return self.debug_msg
+        if ProfilLogger.check_levels('DEBUG'):
+            log = LogEntry(ProfilLogger.now, 'DEBUG', self.debug_msg)
+            self.handlers[0].write(log.logs)
+            self.handlers[1].write(log.logs)
+            LogEntry.reset_logs()
+
 
     def critical(self, msg):
         self.critical_msg = str(msg)
-        LogEntry(ProfilLogger.now, 'CRITICAL', self.critical_msg)
-        return self.critical_msg
+        if ProfilLogger.check_levels('CRITICAL'):
+            log = LogEntry(ProfilLogger.now, 'CRITICAL', self.critical_msg)
+            self.handlers[0].write(log.logs)
+            self.handlers[1].write(log.logs)
+            LogEntry.reset_logs()
+
+
 
     def error(self, msg):
         self.error_msg = str(msg)
-        LogEntry(ProfilLogger.now, 'ERROR', self.error_msg)
-        return self.error_msg
+        if ProfilLogger.check_levels('ERROR'):
+            log = LogEntry(ProfilLogger.now, 'ERROR', self.error_msg)
+            self.handlers[0].write(log.logs)
+            self.handlers[1].write(log.logs)
+            LogEntry.reset_logs()
+
+
 
     @staticmethod
     def set_log_level(msg='DEBUG'):
@@ -52,3 +75,10 @@ class ProfilLogger:
         except Exception:
             print(sys.exc_info()[1])
             sys.exit()
+
+
+    @staticmethod
+    def check_levels(current_level):
+        if ProfilLogger.levels.index(current_level) >= ProfilLogger.levels.index(ProfilLogger.level):
+            return True
+

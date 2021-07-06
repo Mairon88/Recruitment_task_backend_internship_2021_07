@@ -9,12 +9,12 @@ file_handler = FileHandler("logs.txt")
 
 handlers = [json_handler, csv_handler, sql_handler, file_handler]
 
+
 logger = ProfilLogger(handlers)
-logger.set_log_level('CRITICAL')
+logger.set_log_level('DEBUG')
 logger.info("Some info message")
 logger.warning("Some warning message")
 logger.debug("Some debug message")
 logger.critical("Some critical message")
 logger.error("Some error message")
 
-print(LogEntry.logs)

@@ -6,3 +6,11 @@ class LogEntry:
         self.level = level
         self.msg = msg
         LogEntry.logs.append([date, level, msg])
+
+    @classmethod
+    def reset_logs(cls):
+        cls.logs = []
+
+
+
+
