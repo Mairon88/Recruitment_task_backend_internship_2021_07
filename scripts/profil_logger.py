@@ -6,7 +6,7 @@ import inspect
 
 class ProfilLogger:
     levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
-    now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    now = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
     level = None
 
     def __init__(self, handlers):
