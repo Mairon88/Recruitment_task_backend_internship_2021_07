@@ -5,6 +5,6 @@ setup(name='logmaster',
       author='Mariusz Rogawski',
       author_email = 'mariusz.rogawski@gmail.com',
       license = 'For internal use',
-      description = 'This is my solve for recruitment task',
+      description = 'Logger according',
       packages = find_packages(),
       )
