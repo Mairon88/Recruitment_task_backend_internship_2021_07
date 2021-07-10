@@ -1,5 +1,5 @@
 import sys
-from log_entry import LogEntry
+from .log_entry import LogEntry
 from datetime import datetime
 import inspect
 

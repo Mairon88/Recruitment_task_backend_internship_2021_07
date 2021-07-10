@@ -1,1 +1,1 @@
-__all__ = ["handlers", "log_entry", "main", "profil_logger", "profil_logger_reader"]
+__all__ = ["handlers", "log_entry", "profil_logger", "profil_logger_reader"]
