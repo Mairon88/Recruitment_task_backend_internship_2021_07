@@ -4,6 +4,8 @@ import sqlite3
 import os
 
 class JsonHandler:
+
+
     def __init__(self, path):
         self.path = path
 
@@ -63,7 +65,7 @@ class SQLLiteHandler:
 
     def write(self, list):
         if not os.path.exists(self.path):
-            conn = sqlite3.connect('logs.sqlite')
+            conn = sqlite3.connect(self.path)
             c = conn.cursor()
             c.execute('''CREATE TABLE logs
                          (date DATE, level INTEGER, message TEXT)''')
@@ -74,7 +76,7 @@ class SQLLiteHandler:
             conn.close()
 
         else:
-            conn = sqlite3.connect('logs.sqlite')
+            conn = sqlite3.connect(self.path)
             c = conn.cursor()
             c.execute("""INSERT INTO logs VALUES (?,?,?)""",
                     (list[0][0], list[0][1], list[0][2]))
@@ -85,7 +87,7 @@ class SQLLiteHandler:
     def read(self):
         print("Wczytuje dane sqlite")
         if os.path.exists(self.path):
-            conn = sqlite3.connect('logs.sqlite')
+            conn = sqlite3.connect(self.path)
             c = conn.cursor()
             logs = [list(row) for row in c.execute('SELECT * FROM logs')]
             conn.close()

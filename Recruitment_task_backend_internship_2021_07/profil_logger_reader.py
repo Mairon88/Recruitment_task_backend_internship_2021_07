@@ -26,7 +26,7 @@ class ProfilLoggerReader:
             else:
                 logs = [log for log in self.load_data if text in log[2]]
 
-            return logs
+            return print(logs)
 
         else:
             return "BRAK DANYCH DO PRACY"
@@ -60,7 +60,7 @@ class ProfilLoggerReader:
                         if found_log in log[2]:
                             logs.append(log)
 
-            return logs
+            return print(logs)
 
         else:
             return "BRAK DANYCH DO PRACY"
@@ -89,7 +89,7 @@ class ProfilLoggerReader:
                 for log in self.load_data:
                     groupby_level_dict[log[1]].append(log)
 
-            return groupby_level_dict
+            return print(groupby_level_dict)
 
         else:
             return "BRAK DANYCH DO PRACY"
@@ -118,7 +118,7 @@ class ProfilLoggerReader:
                 for log in self.load_data:
                     groupby_month_dict[calendar.month_name[int(log[0][3:5])]].append(log)
 
-            return groupby_month_dict
+            return print(groupby_month_dict)
 
         else:
             return "BRAK DANYCH DO PRACY"
