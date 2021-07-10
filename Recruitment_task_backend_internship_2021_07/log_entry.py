@@ -1,4 +1,7 @@
 class LogEntry:
+    """
+    Class for creating a single log, which is later written to a file
+    """
     logs = []
 
     def __init__(self, date, level, msg):
@@ -9,6 +12,9 @@ class LogEntry:
 
     @classmethod
     def reset_logs(cls):
+        """
+        The method for reset logs
+        """
         cls.logs = []
 
 

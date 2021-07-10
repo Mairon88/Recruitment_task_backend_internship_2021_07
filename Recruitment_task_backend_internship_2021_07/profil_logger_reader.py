@@ -6,6 +6,12 @@ import calendar
 
 class ProfilLoggerReader:
 
+    """
+    A class to read data from files as specified in the method
+    The class takes hendlers as a parameter, thanks to which it reads logs from all files to which
+    a specific hendler refers
+    """
+
     def __init__(self, handler):
 
         self.handler = handler
@@ -13,7 +19,14 @@ class ProfilLoggerReader:
 
     def find_by_text(self, text, start_date=None, end_date=None):
 
-        logs = []
+        """
+        The method finds log entries that contain the specified text.
+        If any datetime is given, filter logs according to that datetime.
+        :param text: the text to find in the log message
+        :param start_date: start date of the log range
+        :param end_date: end date of the log range
+        :return: founded logs
+        """
 
         if self.load_data:
             if start_date and end_date:
@@ -29,11 +42,18 @@ class ProfilLoggerReader:
             return print(logs)
 
         else:
-            return "BRAK DANYCH DO PRACY"
+            return "No logs"
 
 
     def find_by_regex(self, regex, start_date=None, end_date=None):
-
+        """
+        The method finds logs by a given regexp.
+        If any datetime is given, filter logs according to that datetime.
+        :param regex: the regex to find in the log message
+        :param start_date: start date of the log range
+        :param end_date: end date of the log range
+        :return: founded logs
+        """
         logs = []
 
         if self.load_data:
@@ -63,16 +83,20 @@ class ProfilLoggerReader:
             return print(logs)
 
         else:
-            return "BRAK DANYCH DO PRACY"
+            return "No logs"
 
 
     def groupby_level(self, start_date=None, end_date=None):
-
+        """
+         The method groups logs by level.
+         If any datetime is given, filter logs according to that datetime.
+         :param start_date: start date of the log range
+         :param end_date: end date of the log range
+         :return: founded logs
+         """
         if self.load_data:
-            #Tworzenie kluczy z wartosciami w formie pustych list
             groupby_level_dict = {log[1]:[] for log in self.load_data}
 
-            #Uzupełniani wartosci listami z logami
             if start_date and end_date:
                 ProfilLoggerReader.dates_validation(start_date, end_date)
                 start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y %H:%M:%S")
@@ -92,16 +116,20 @@ class ProfilLoggerReader:
             return print(groupby_level_dict)
 
         else:
-            return "BRAK DANYCH DO PRACY"
+            return "No logs"
 
     def groupby_month(self, start_date=None, end_date=None):
-
+        """
+         The method groups logs by month.
+         If any datetime is given, filter logs according to that datetime.
+         :param start_date: start date of the log range
+         :param end_date: end date of the log range
+         :return: founded logs
+         """
         if self.load_data:
             groupby_month_dict = {calendar.month_name[int(log[0][3:5])]: [] for log in self.load_data}
 
-            #Uzupełniani wartosci listami z logami
             if start_date and end_date:
-                # Tworzenie kluczy nazwami miesięcy i z wartosciami w formie pustych list
 
                 ProfilLoggerReader.dates_validation(start_date, end_date)
                 start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y %H:%M:%S")
@@ -121,11 +149,16 @@ class ProfilLoggerReader:
             return print(groupby_month_dict)
 
         else:
-            return "BRAK DANYCH DO PRACY"
+            return "No logs"
 
 
     @staticmethod
     def dates_validation(start_date, end_date):
+        """
+        The method to validation entered dates.
+        :param start_date: start date of the log range
+        :param end_date: end date of the log range
+        """
         try:
             start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y %H:%M:%S")
             end_date = datetime.datetime.strptime(end_date, "%d-%m-%Y %H:%M:%S")

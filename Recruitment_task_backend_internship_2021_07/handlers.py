@@ -22,30 +22,33 @@ class JsonHandler:
         :return: None
         """
 
-        json_list = json.dumps(data_list)
-        print(json_list)
-        if not os.path.exists(self.path):
+        json_list = json.dumps(data_list) # converts a Python object into a json string
+        if not os.path.exists(self.path): # if the file does not exist, it is created
             with open(self.path, 'w') as file:
                 file.write(json_list)
-        else:
+        else:                             # however, if the file does exist, we open it and check if it is empty
 
             with open(self.path, 'r') as file:
                 try:
-                    is_file_empty = False
+                    is_file_empty = False   # we try to read data from the file, if we can't do it, set the status of
+                                            # the file to empty in the except block
                     data = json.load(file)
 
                 except:
                     is_file_empty = True
 
-            if is_file_empty:
+            if is_file_empty:               # if the file is empty, convert the list to json and save it
+
                 json_list = json.dumps(data_list)
                 with open(self.path, 'w') as file:
                     file.write(json_list)
 
             else:
-                data.append(data_list[0])
+
+                data.append(data_list[0])   # If the file is not empty, load the contents of json into data on line 35
+                                            # and add a list to it and then save it to json again
                 with open(self.path, 'w') as file:
-                    json.dump(data, file, indent=2)
+                    json.dump(data, file, indent=2) # The indent parameter specifies the spaces that are used at the beginning of a line
 
 
     def read(self):
