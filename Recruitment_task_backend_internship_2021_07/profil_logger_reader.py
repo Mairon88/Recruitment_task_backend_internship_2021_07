@@ -2,7 +2,7 @@ import datetime
 import sys
 import re
 import calendar
-
+import pprint
 
 class ProfilLoggerReader:
 
@@ -20,7 +20,7 @@ class ProfilLoggerReader:
     def find_by_text(self, text, start_date=None, end_date=None):
 
         """
-        The method finds log entries that contain the specified text.
+        The method finds log entries that contain the specified text and print them.
         If any datetime is given, filter logs according to that datetime.
         :param text: the text to find in the log message
         :param start_date: start date of the log range
@@ -38,16 +38,16 @@ class ProfilLoggerReader:
                         datetime.datetime.strptime(log[0], "%d-%m-%Y %H:%M:%S") <= end_date]
             else:
                 logs = [log for log in self.load_data if text in log[2]]
-
-            return print(logs)
+            print("\nLOGS FOUND BY TEXT")
+            pprint.pprint(logs)
 
         else:
-            return "No logs"
+            print("No logs")
 
 
     def find_by_regex(self, regex, start_date=None, end_date=None):
         """
-        The method finds logs by a given regexp.
+        The method finds logs by a given regexp and print them.
         If any datetime is given, filter logs according to that datetime.
         :param regex: the regex to find in the log message
         :param start_date: start date of the log range
@@ -79,16 +79,16 @@ class ProfilLoggerReader:
                         found_log = log_regex.findall(log[2])[0]
                         if found_log in log[2]:
                             logs.append(log)
-
-            return print(logs)
+            print("\nLOGS FOUND BY REGEX")
+            pprint.pprint(logs)
 
         else:
-            return "No logs"
+            print("No logs")
 
 
     def groupby_level(self, start_date=None, end_date=None):
         """
-         The method groups logs by level.
+         The method groups logs by level and print them.
          If any datetime is given, filter logs according to that datetime.
          :param start_date: start date of the log range
          :param end_date: end date of the log range
@@ -112,15 +112,15 @@ class ProfilLoggerReader:
             else:
                 for log in self.load_data:
                     groupby_level_dict[log[1]].append(log)
-
-            return print(groupby_level_dict)
+            print("\nLOGS GROUPED BY LEVEL")
+            pprint.pprint(groupby_level_dict)
 
         else:
-            return "No logs"
+            print("No logs")
 
     def groupby_month(self, start_date=None, end_date=None):
         """
-         The method groups logs by month.
+         The method groups logs by month and print them.
          If any datetime is given, filter logs according to that datetime.
          :param start_date: start date of the log range
          :param end_date: end date of the log range
@@ -145,11 +145,11 @@ class ProfilLoggerReader:
             else:
                 for log in self.load_data:
                     groupby_month_dict[calendar.month_name[int(log[0][3:5])]].append(log)
-
-            return print(groupby_month_dict)
+            print("\nLOGS GROUPED BY MONTH")
+            pprint.pprint(groupby_month_dict)
 
         else:
-            return "No logs"
+            print("No logs")
 
 
     @staticmethod
