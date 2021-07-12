@@ -47,7 +47,7 @@ class ProfilLogger:
         :param msg: information transmitted in the log
         """
         self.debug_msg = str(msg)
-        ProfilLogger.save_logs(inspect.stack()[0][3], self.info_msg, self.handlers)
+        ProfilLogger.save_logs(inspect.stack()[0][3], self.debug_msg, self.handlers)
 
     def critical(self, msg):
         """

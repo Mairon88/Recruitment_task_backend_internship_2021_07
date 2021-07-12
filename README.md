@@ -120,6 +120,7 @@ metoda ta grupuje logi według miesiąca,w którym został utworzony log
 ### Przykładowe użycie i wyniki
 
 
+
 urrency for the bitcoin cryptocurrency.
 
 ![Alt text](img/avg.png)
