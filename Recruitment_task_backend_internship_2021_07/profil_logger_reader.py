@@ -113,7 +113,7 @@ class ProfilLoggerReader:
                 for log in self.load_data:
                     groupby_level_dict[log[1]].append(log)
             print("\nLOGS GROUPED BY LEVEL")
-            pprint.pprint(groupby_level_dict)
+            pprint.pprint(groupby_level_dict, sort_dicts=False)
 
         else:
             print("No logs")
@@ -146,7 +146,7 @@ class ProfilLoggerReader:
                 for log in self.load_data:
                     groupby_month_dict[calendar.month_name[int(log[0][3:5])]].append(log)
             print("\nLOGS GROUPED BY MONTH")
-            pprint.pprint(groupby_month_dict)
+            pprint.pprint(groupby_month_dict, sort_dicts=False)
 
         else:
             print("No logs")
