@@ -110,31 +110,66 @@ Do wyświetlenia odpowiednich logów, powyższe obiekty posiadają metody:
     
 
 * groupby_month
-metoda ta grupuje logi według miesiąca,w którym został utworzony log
+metoda ta grupuje logi według miesiąca ,w którym został utworzony log w postaci słownika
 
         log_reader_json.groupby_level('07-01-2021 16:00:00','07-12-2021 22:20:00')
 
     opcjonalnie jako argumenty można podać daty w formacie jak pokazano w powyższym fragmencie.
 
 
-### Przykładowe użycie i wyniki
+### Przykładowe użycia.
+
+Zapisane dane zgodnie z poniższym fragmentem
+
+      json_handler = JsonHandler("logs.json")
+      csv_handler = CSVHandler("logs.csv")
+      sql_handler = SQLLiteHandler("logs.sqlite")
+      file_handler = FileHandler("logs.txt")
+      
+      handlers = [json_handler, csv_handler, sql_handler, file_handler]
+      logger = ProfilLogger(handlers)
+  
+      logger.set_log_level('WARNING')
+      logger.info("Some info message")
+      logger.warning("Some warning message")
+      logger.debug("Some debug message")
+      logger.critical("Some critical message")
+      logger.error("Some error message")
+
+  Powodują powstanie następujących plików
+
+![Alt text](github_img/rys_1.png)
+
+, które zgodnie z ustawioną wartością w set_log_level powinny zawierać
+  logi od poziomu WARNING.
+
+![Alt text](github_img/rys2.png)
+
+Odczyt plików za pomocą poniższych metod 
+
+    log_reader_csv = ProfilLoggerReader(handler=csv_handler)
+    log_reader_csv.find_by_text("ing me", '10-07-2021 00:00:00','07-08-2021 22:20:00') 
+    log_reader_csv.find_by_regex(r"\w\w\w\w e", '07-07-2021 00:00:00','10-08-2021 22:20:00')
+    log_reader_csv.groupby_level('07-01-2021 16:00:00','07-12-2021 22:20:00')
+    log_reader_csv.groupby_month('07-01-2021 16:00:00','07-12-2021 22:20:00')
+
+spowoduje wyświetlenie listy logów
+
+![Alt text](github_img/rys_3.png)
+
+![Alt text](github_img/rys_5.png)
+
+![Alt text](github_img/rys_4.png)
+
+![Alt text](github_img/rys_6.png)
+
+Niepoprawne wpisanie daty, np. data końcowa jest wcześniejsza od początkowej 
+
+    log_reader_csv.groupby_month('07-12-2021 22:20:00','07-01-2021 00:00:00')
+
+spowoduje pojawienie się komunikatu
+
+    WARNING: Start date should be earlier than end date
 
 
 
-urrency for the bitcoin cryptocurrency.
-
-![Alt text](img/avg.png)
-
-
-
-
-### Finds the longest consecutive period in which price was increasing.
-
-In order to display the longest consecutive period in which the cryptocurrency price has been increasing in the given period, in the command line window, enter:
-    
-    $ python script.py consecutive-increase --start-date=2021-03-01 --end-date=2021-04-01
-
-The result of the command is a period of continuous increase in the price of the cryptocurrency and the value by which the price increased throughout the period
-, default for bitcoin cryptocurrency.
-
-![Alt text](img/inc.png)

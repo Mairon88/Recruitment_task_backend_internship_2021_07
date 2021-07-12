@@ -1,5 +1,5 @@
 import sys
-from .log_entry import LogEntry
+from log_entry import LogEntry
 from datetime import datetime
 import inspect
 
@@ -84,7 +84,7 @@ class ProfilLogger:
 
 
     @classmethod
-    def set_log_level(cls,level='DEBUG'):
+    def set_log_level(cls, level='DEBUG'):
         """
         Class method to set minimal log level to be saved
         :param level: log level to be set
