@@ -6,42 +6,43 @@
 
 ---
 
-### Główne informacje
+### General informations
 
-Logger to program, który zapisuje domyślnie wszystkie wywołane zdarzenia do plików o rozszerzeniach:
+Logger is a program that saves all triggered events by default to files with extensions:
+
  * .json
  * .csv
  * .sqlite
  * .txt
 
-Zapisane logi w plikach można odczytać według określonych metod:
-* Szukanie logów poprzez tekst, który zawierają wiadomości logów
-* Szukanie logów poprzez dopasowanie tekstu z wiadomości loga do wzorca wyrażenia regularnego
-* Grupowanie logów według ich poziomu
-* Grupowanie logów wedługo miesiąca ich utworzenia
+Saved logs in files can be read according to specific methods:
+* Search logs by text that contain log messages
+* Searching for logs by matching the text from the log message to the regular expression pattern
+* Grouping of logs according to their level
+* Grouping of logs by the month of their creation
 
-Dodatkowo w każdej z powyższych metod można wpisać zakres dat dla których należy wyświetlić logi.
+Additionally, in each of the above methods, you can enter the date range for which the logs should be displayed.
 
 ---
 
-### Instalacja
+### Installation
 
-Logger można zainstalować z githuba, z terminala za pomoca polecenia
+The logger can be installed from github, from a terminal using a command
 
     $ pip install git+https://github.com/Mairon88/Recruitment_task_backend_internship_2021_07.git#egg=logmaster
 
-Github poprosi o wprowadzenie loginu i hasła do konta na githubie zanim biblioteka zostanie zainstalowana.
+Github will ask you to enter your login and password for your github account before installing the library.
 
-### Jak korzystać? 
+### How to use?
 
-Po zainstalowaniu biblioteki u siebie w projekcie, aby swobodnie korzystać z jej funkcjonalności należy zaimportować 
-odpowiednie moduły tak jak pokazano poniżej:
+After installing the library in the project, in order to freely use its functionality, you must import
+relevant modules as shown below:
 
     from Recruitment_task_backend_internship_2021_07.handlers import JsonHandler, CSVHandler, SQLLiteHandler, FileHandler
     from Recruitment_task_backend_internship_2021_07.profil_logger import ProfilLogger
     from Recruitment_task_backend_internship_2021_07.profil_logger_reader import ProfilLoggerReader
 
-Następnie należy utworzyć handlery do zapisu i odczytu plików w interesująym nas formacie jak pokazano poniżej:
+Then create handlers for reading and writing files in the format we are interested in, as shown below:
 
     json_handler = JsonHandler("logs.json")
     csv_handler = CSVHandler("logs.csv")
@@ -49,77 +50,79 @@ Następnie należy utworzyć handlery do zapisu i odczytu plików w interesująy
     file_handler = FileHandler("logs.txt")
 
 
-W przykładzie handlery zostały zapisane w liście i przekazane jako parametr do klasy ProfilLogger.
+
+In the example, the handlers were saved in the list and passed as a parameter to the ProfileLogger class.
 
     handlers = [json_handler, csv_handler, sql_handler, file_handler]
     logger = ProfilLogger(handlers)
 
-Za pomocą obiektu logger i metod jakie mamy do dyspozycji możemy:
-* ustawić minimalny poziom loga, od którego nastąpi zapis do pliku (poziomy od najniższego do najwyższego -> 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL' )
+Using the logger object and the methods we have at our disposal, we can:
+* set the minimum log level from which the file will be saved (levels from the lowest to the highest -> 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
   
         logger.set_log_level('DEBUG')
 
-* wywołać log do zapisu, poniżej przedastawiono wywołanie logów dla każdego poziomu
+* call log to write, below is log call for each level
     
         logger.info("Some info message")
         logger.warning("Some warning message")
         logger.debug("Some debug message")
         logger.critical("Some critical message")
         logger.error("Some error message")
-  
-    powyższe wywołanie zapisuje logi do każdego pliku wskazanego przez handlery
 
-Odczyt logów z plików umożliwia klasa ProfilLoggerReader, która jako parametr przyjmuje odpowiedniego handlera.
+  the above call writes logs to each file pointed to by handlers
+
+The ProfileLoggerReader class allows you to read logs from files, which takes the appropriate handler as a parameter.
 
     log_reader_json = ProfilLoggerReader(handler=json_handler)
     log_reader_csv = ProfilLoggerReader(handler=csv_handler)
     log_reader_sqlite = ProfilLoggerReader(handler=sql_handler)
     log_reader_txt = ProfilLoggerReader(handler=file_handler)
 
-Stworzone powyżej obiekty przechowują odczytane dane z polików w postaci listy.
 
-Do wyświetlenia odpowiednich logów, powyższe obiekty posiadają metody:
+The objects created above store the read data from the cheeks in the form of a list.
+
+To display the appropriate logs, the above objects have methods:
 
 * find_by_text
     
-    metoda ta szuka logów poprzez tekst, który zawierają wiadomości logów
-
+    this method looks for logs through the text containing the log messages
+  
         log_reader_json.find_by_text("info",'07-07-2021 16:00:00','07-08-2021 22:20:00')
 
-    Jako pierwszy argument należy podać tekst -> str, który zostanie wyszukany w utworzonych logach oraz opcjonalnie daty
-    w formacie jak pokazano w powyższym fragmencie.
+    The first argument should be the text -> str, which will be found in the created logs, and optionally dates
+    in the format as shown in the snippet above.
   
 
 * find_by_regex
     
-    metoda ta szuka logów poprzez dopasowanie tekstu z wiadomości loga do wzorca wyrażenia regularnego
+    this method looks for logs by matching the text in the log message to a regular expression pattern
 
         log_reader_json.find_by_regex(r"\w\w\w\w \w\w\w\w ", '07-07-2021 16:00:00','07-08-2021 22:20:00')
 
-    Jako pierwszy argument należy podać regex -> str, który zostanie wyszukany w utworzonych logach oraz opcjonalnie daty
-    w formacie jak pokazano w powyższym fragmencie.
+    The first argument should be regex -> str, which will be found in the created logs, and optionally dates
+    in the format as shown in the snippet above.
     
 
 * groupby_level
     
-  metoda ta grupuje logi według ich poziomu
+  this method groups the logs according to their level
 
         log_reader_json.groupby_level('07-01-2021 16:00:00','07-12-2021 22:20:00')
 
-    opcjonalnie jako argumenty można podać daty w formacie jak pokazano w powyższym fragmencie.
+    optionally dates in the format as shown in the above snippet may be given as arguments.
     
 
 * groupby_month
-metoda ta grupuje logi według miesiąca ,w którym został utworzony log w postaci słownika
+this method groups the logs according to the month in which the log was created in the form of a dictionary
 
         log_reader_json.groupby_level('07-01-2021 16:00:00','07-12-2021 22:20:00')
 
-    opcjonalnie jako argumenty można podać daty w formacie jak pokazano w powyższym fragmencie.
+    optionally dates in the format as shown in the above snippet may be given as arguments.
 
 
-### Przykładowe użycia.
+### Sample usage
 
-Zapisane dane zgodnie z poniższym fragmentem
+The saved data according to the following section creates the following files
 
       json_handler = JsonHandler("logs.json")
       csv_handler = CSVHandler("logs.csv")
@@ -136,16 +139,15 @@ Zapisane dane zgodnie z poniższym fragmentem
       logger.critical("Some critical message")
       logger.error("Some error message")
 
-  Powodują powstanie następujących plików
 
 ![Alt text](github_img/rys_1.png)
 
-, które zgodnie z ustawioną wartością w set_log_level powinny zawierać
-  logi od poziomu WARNING.
+which according to the value set in set_log_level should contain
+  logs from the WARNING level.
 
 ![Alt text](github_img/rys2.png)
 
-Odczyt plików za pomocą poniższych metod 
+Reading files using the methods below
 
     log_reader_csv = ProfilLoggerReader(handler=csv_handler)
     log_reader_csv.find_by_text("ing me", '10-07-2021 00:00:00','07-08-2021 22:20:00') 
@@ -153,7 +155,7 @@ Odczyt plików za pomocą poniższych metod
     log_reader_csv.groupby_level('07-01-2021 16:00:00','07-12-2021 22:20:00')
     log_reader_csv.groupby_month('07-01-2021 16:00:00','07-12-2021 22:20:00')
 
-spowoduje wyświetlenie listy logów
+will display a list of logs
 
 ![Alt text](github_img/rys_3.png)
 
@@ -163,11 +165,13 @@ spowoduje wyświetlenie listy logów
 
 ![Alt text](github_img/rys_6.png)
 
-Niepoprawne wpisanie daty, np. data końcowa jest wcześniejsza od początkowej 
+
+Incorrect date entry, e.g. end date is earlier than start date
 
     log_reader_csv.groupby_month('07-12-2021 22:20:00','07-01-2021 00:00:00')
 
-spowoduje pojawienie się komunikatu
+
+will display a message
 
     WARNING: Start date should be earlier than end date
 
