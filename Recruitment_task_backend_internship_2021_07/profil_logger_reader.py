@@ -16,6 +16,8 @@ class ProfilLoggerReader:
 
         self.handler = handler
         self.load_data = self.handler.read()
+        self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        self.levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
 
     def find_by_text(self, text, start_date=None, end_date=None):
 
@@ -95,15 +97,13 @@ class ProfilLoggerReader:
          :return: founded logs
          """
         if self.load_data:
-            groupby_level_dict = {log[1]:[] for log in self.load_data}
+            groupby_level_dict = {level:[] for level in self.levels}
 
             if start_date and end_date:
                 ProfilLoggerReader.dates_validation(start_date, end_date)
                 start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y %H:%M:%S")
                 end_date = datetime.datetime.strptime(end_date, "%d-%m-%Y %H:%M:%S")
-                groupby_level_dict = {log[1]:[] for log in self.load_data
-                                      if start_date <= datetime.datetime.strptime(log[0], "%d-%m-%Y %H:%M:%S")
-                                      <= end_date}
+
 
                 for log in self.load_data:
                     if start_date <= datetime.datetime.strptime(log[0], "%d-%m-%Y %H:%M:%S") <= end_date:
@@ -126,17 +126,16 @@ class ProfilLoggerReader:
          :param end_date: end date of the log range
          :return: founded logs
          """
+
+
         if self.load_data:
-            groupby_month_dict = {calendar.month_name[int(log[0][3:5])]: [] for log in self.load_data}
+            groupby_month_dict = {month: [] for month in self.months}
 
             if start_date and end_date:
 
                 ProfilLoggerReader.dates_validation(start_date, end_date)
                 start_date = datetime.datetime.strptime(start_date, "%d-%m-%Y %H:%M:%S")
                 end_date = datetime.datetime.strptime(end_date, "%d-%m-%Y %H:%M:%S")
-                groupby_month_dict = {calendar.month_name[int(log[0][3:5])]: [] for log in self.load_data
-                                      if start_date <= datetime.datetime.strptime(log[0], "%d-%m-%Y %H:%M:%S")
-                                      <= end_date}
 
                 for log in self.load_data:
                     if start_date <= datetime.datetime.strptime(log[0], "%d-%m-%Y %H:%M:%S") <= end_date:
